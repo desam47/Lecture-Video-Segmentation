@@ -1,0 +1,5 @@
+webrtcvad
+pika
+psycopg2
+numpy
+pymongo

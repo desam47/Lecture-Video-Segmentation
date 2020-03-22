@@ -1,0 +1,5 @@
+pika
+psycopg2
+numpy
+aubio
+pymongo
