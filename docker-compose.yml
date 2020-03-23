@@ -34,7 +34,7 @@ services:
         - postgres-compose
 
   api_rest:
-    build: API_REST
+    build: REST_API
     links:
       - rabbitmq
       - postgres-compose

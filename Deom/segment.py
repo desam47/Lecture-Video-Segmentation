@@ -7,10 +7,10 @@ import time
 from DAO.mongodb import MongoDB
 import ast
 import argparse
-API_REST_ADDRESS = None
+REST_API_ADDRESS = None
 ENDPOINT = None
 def send_request(lecture):
-    return json.loads(requests.post(API_REST_ADDRESS + ENDPOINT, files={'file': open(lecture, 'rb')}).content)['project_id']
+    return json.loads(requests.post(REST_API_ADDRESS + ENDPOINT, files={'file': open(lecture, 'rb')}).content)['project_id']
 
 
 def check_job_done(project_id):
@@ -32,7 +32,7 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    API_REST_ADDRESS = 'http://' + args.server_ip + ':' + args.port
+    REST_API_ADDRESS = 'http://' + args.server_ip + ':' + args.port
     ENDPOINT = '/segmentation'
     ids = []
     files = glob.glob('data/*.mp4')
