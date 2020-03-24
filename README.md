@@ -1,16 +1,42 @@
 # Lecture-Video-Segmentation
 
+This "Lecture Video Segmentation" architecture consists of a number of modules, each of which is responsible for a single stage of processing. The modules used are briefly described below:
+
+* REST API: Entry point of this architecture where lecture videos are sent to be processed.
+* RabbitMQ: Message broker responsible for managing the processing queues used by the processing workers.
+* Audio Extractor: Responsible for extracting audio tracks from input lecture videos.
+* Voice Activity Detector: Detects and splits the audio tracks into entirely voiced parts, reducing the duration of silence.
+* ASR: Automatic Speech Recognition module that transform spoken language into text.
+* Acoustic Feature Extractor: Extracts low level features (pitch, volume, pause rates, etc) from audio blocks.
+* Flow Aggregator: Aggregates the feature extraction results to be used by the segmentation module
+* Segmentation: Module that segments the lecture video based on the extracted features. We use Word2Vec model for our segmentation algorithm.
+* PostgreSQL: Database used to store metadata from processing.
+* MongoDB: Database used to store the binary files from processing.
 
 
-Our architecture is composed of several modules where each one is responsible for one stage of processing:
+# How to run this architecture
 
-API REST: architecture entrypoint where video lectures are sent to be processed.
-RabbitMQ: message broker responsible for the management of the processing queues that are consumed by the processing workers
-Audio Extractor: responsible for extract the audio track from the input video
-Voice Activity Detector: detects and split the audio into fully voiced chunks, minimizing the silence times
-ASR: Automatic Speech Recognition module
-Acoustic Feature Extractor: extracts low level features (pitch, volume, pause rates, etc) from audio chunks
-Flow Aggregator: aggregates the feature extraction results to be used by the topic segmentation module
-Topic Segmentation: module that segments the video lecture based on the features extracted
-PostgreSQL: Database used to store metadata from processing
-MongoDB: Database used to store the binary files from processing
+
+
+```sh
+
+cd Lecture-Video-Segmentation
+
+```
+
+
+```sh
+
+sudo docker-compose up
+
+```
+
+Once the architecture has been initialized and all containers are running, open a new Terminal tab and enter the "Demo" folder.
+ 
+
+```sh
+
+cd Lecture-Video-Segmentation/Demo
+
+python3 segment.py
+```
