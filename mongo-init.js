@@ -1,7 +1,7 @@
 db.createUser(
         {
             user: "root",
-            pwd: "MongoDB2019!",
+            pwd: "MongoDB2020!",
             roles: [
                 {
                     role: "root",
