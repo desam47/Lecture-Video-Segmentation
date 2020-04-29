@@ -46,7 +46,7 @@ if __name__ == '__main__':
             if res:
 
                 dc = ast.literal_eval(get_result_file(res['result']['oid']).decode('utf-8'))
-                print(dc)
+                #print(dc)
 
                 print('Task completed: ' + str(dc))
                 results.append({'Video Name': video, 'Segmentation': dc})
