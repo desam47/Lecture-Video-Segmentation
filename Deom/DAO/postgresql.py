@@ -5,6 +5,7 @@ import psycopg2
 class Postgresql:
 
     def __init__(self):
+    #def __init__(self, api_rest_host):
         with open('DAO/pg_credentials.json') as cred_file:
             creds = json.load(cred_file)
             self._user = creds['credentials']['pg_user']

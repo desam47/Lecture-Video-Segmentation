@@ -4,6 +4,7 @@ from bson import ObjectId
 import json
 class MongoDB:
     def __init__(self):
+    #def __init__(self, api_rest_ip):
         with open('DAO/mongo_db_credentials.json') as f:
             credentials = json.load(f)
             self.mongo_host = credentials['credentials']['mongo_host']
