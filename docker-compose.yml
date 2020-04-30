@@ -14,21 +14,18 @@ services:
     image: postgres
     environment:
       POSTGRES_USER: "postgres"
-      POSTGRES_PASSWORD: "Postgres2019!"
-      #POSTGRES_PASSWORD: "Postgres2020!"
-
+      POSTGRES_PASSWORD: "Postgres2019!"      
     ports:
       - "15432:5432"
     volumes:
       - /media/pg:/var/lib/postgresql/data
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      
   pgadmin-compose:
       image: dpage/pgadmin4
       environment:
-        #PGADMIN_DEFAULT_EMAIL: "rsoares.eduardo@gmail.com"
         PGADMIN_DEFAULT_EMAIL: "dipeshchand747@gmail.com"
-        PGADMIN_DEFAULT_PASSWORD: "PgAdmin2019!"    
-        #PGADMIN_DEFAULT_PASSWORD: "PgAdmin2020!"
+        PGADMIN_DEFAULT_PASSWORD: "PgAdmin2019!"        
       ports:
         - "16543:80"
       depends_on:
@@ -46,7 +43,6 @@ services:
     environment:
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "Postgres2019!"
-      #POSTGRES_PASSWORD: "Postgres2020!"
       POSTGRES_PORT: "5432"
       POSTGRES_HOST: "postgres-compose"
       POSTGRES_DB: "postgres"
@@ -55,41 +51,38 @@ services:
       MONGO_PORT: "27017"
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: MongoDB2019!
-      #ME_CONFIG_MONGODB_ADMINPASSWORD: MongoDB2020!
     depends_on:
       - rabbitmq
       - postgres-compose
       - mongo
-  worker_vad:
-    build: worker_vad
-    environment:
-      NUM_WORKERS: "6"
-      POSTGRES_USER: "postgres"
-      POSTGRES_PASSWORD: "Postgres2019!"
-      #POSTGRES_PASSWORD: "Postgres2020!"
-      POSTGRES_PORT: "5432"
-      POSTGRES_HOST: "postgres-compose"
-      POSTGRES_DB: "postgres"
-      QUEUE_SERVER: "rabbitmq"
-      HOST_MONGO: "mongo"
-      MONGO_PORT: "27017"
-      ME_CONFIG_MONGODB_ADMINUSERNAME: root
-      ME_CONFIG_MONGODB_ADMINPASSWORD: MongoDB2019!
-      #ME_CONFIG_MONGODB_ADMINPASSWORD: MongoDB2020!
       
+  voice_activity_decoder:
+    build: voice_activity_decoder
+    environment:
+      NUM_WORKERS: "6"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "Postgres2019!"
+      POSTGRES_PORT: "5432"
+      POSTGRES_HOST: "postgres-compose"
+      POSTGRES_DB: "postgres"
+      QUEUE_SERVER: "rabbitmq"
+      HOST_MONGO: "mongo"
+      MONGO_PORT: "27017"
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: MongoDB2019!
     links:
       - rabbitmq
       - postgres-compose
       - mongo
     depends_on:
       - rabbitmq
-  worker_low_level_features:
-    build: worker_low_level_features
+      
+  acoustic_feature_extractor:
+    build: acoustic_feature_extractor
     environment:
       NUM_WORKERS: "6"
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "Postgres2019!"
-      #POSTGRES_PASSWORD: "Postgres2020!"
       POSTGRES_PORT: "5432"
       POSTGRES_HOST: "postgres-compose"
       POSTGRES_DB: "postgres"
@@ -98,18 +91,17 @@ services:
       HOST_MONGO: "mongo"
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: MongoDB2019!
-      #ME_CONFIG_MONGODB_ADMINPASSWORD: MongoDB2020!
     links:
       - rabbitmq
       - mongo
       - postgres-compose
+      
   audio_extractor:
     build: audio_extractor
     environment:
       NUM_WORKERS: "6"
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "Postgres2019!"
-      #POSTGRES_PASSWORD: "Postgres2020!"
       POSTGRES_PORT: "5432"
       POSTGRES_HOST: "postgres-compose"
       POSTGRES_DB: "postgres"
@@ -117,8 +109,7 @@ services:
       HOST_MONGO: "mongo"
       MONGO_PORT: "27017"
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
-      ME_CONFIG_MONGODB_ADMINPASSWORD: MongoDB2019!
-      #ME_CONFIG_MONGODB_ADMINPASSWORD: MongoDB2020!
+      ME_CONFIG_MONGODB_ADMINPASSWORD: MongoDB2019!      
     links:
       - rabbitmq
       - mongo
@@ -128,18 +119,14 @@ services:
     image: mongo-express
     ports:
       - 8081:8081
-    environment:
-      #ME_CONFIG_BASICAUTH_USERNAME: eduardo
+    environment:      
       ME_CONFIG_BASICAUTH_USERNAME: desam47
       ME_CONFIG_BASICAUTH_PASSWORD: MongoExpress2019!
-      #ME_CONFIG_BASICAUTH_PASSWORD: MongoExpress2020!
       ME_CONFIG_MONGODB_PORT: 27017
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: MongoDB2019!
-      #ME_CONFIG_MONGODB_ADMINPASSWORD: MongoDB2020!
     links:
       - mongo
-
     depends_on:
       - mongo
 
@@ -148,21 +135,19 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: MongoDB2019!
-      #MONGO_INITDB_ROOT_PASSWORD: MongoDB2020!
       MONGO_INITDB_DATABASE: topic_segmentation
     ports:
       - "27017:27017"
     volumes:
       - /media/MongoDB:/data/db
       - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
-  asr_worker:
-    build: worker_asr
-
+      
+  asr_client:
+    build: asr_client
     environment:
       NUM_WORKERS: "6"
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "Postgres2019!"
-      #POSTGRES_PASSWORD: "Postgres2020!"
       POSTGRES_PORT: "5432"
       POSTGRES_HOST: "postgres-compose"
       POSTGRES_DB: "postgres"
@@ -171,7 +156,6 @@ services:
       MONGO_PORT: "27017"
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: MongoDB2019!
-      #ME_CONFIG_MONGODB_ADMINPASSWORD: MongoDB2020!
       GSTREAM_PORT: 80
       ASR_SERVER: "asr"
     links:
@@ -181,6 +165,7 @@ services:
       - asr
     depends_on:
       - asr
+      
   asr:
     build: asr_server
     volumes:
@@ -188,17 +173,13 @@ services:
       - ./sample_english_nnet2.yaml:/opt/test/models/sample_english_nnet2.yaml
     ports:
       - "9999:80"
-
-
-
-  aggregator_worker:
-    build: aggregator
-
+      
+  aggregator_client:
+    build: aggregator_client
     environment:
       NUM_WORKERS: "6"
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "Postgres2019!"
-      #POSTGRES_PASSWORD: "Postgres2020!"
       POSTGRES_PORT: "5432"
       POSTGRES_HOST: "postgres-compose"
       POSTGRES_DB: "postgres"
@@ -207,21 +188,19 @@ services:
       MONGO_PORT: "27017"
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: MongoDB2019!
-      #ME_CONFIG_MONGODB_ADMINPASSWORD: MongoDB2020!
-
     links:
       - rabbitmq
       - postgres-compose
       - mongo
     depends_on:
       - rabbitmq
-  topic_segmentation_worker:
+      
+  segmentation_algorithm:
     build: segmentation_algorithm
     environment:
       NUM_WORKERS: "6"
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "Postgres2019!"
-      #POSTGRES_PASSWORD: "Postgres2020!"
       POSTGRES_PORT: "5432"
       POSTGRES_HOST: "postgres-compose"
       POSTGRES_DB: "postgres"
@@ -230,8 +209,6 @@ services:
       MONGO_PORT: "27017"
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: MongoDB2019!
-      #ME_CONFIG_MONGODB_ADMINPASSWORD: MongoDB2020!
-
     links:
       - rabbitmq
       - postgres-compose
