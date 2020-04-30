@@ -36,7 +36,7 @@ if __name__ == '__main__':
     REST_API_ADDRESS = 'http://' + args.server_ip + ':' + args.port
     ENDPOINT = '/segmentation'
     ids = []
-    files = glob.glob('Data/*.mp4')
+    files = glob.glob('Dataset/*.mp4')
     for file in files:
         ids.append((send_request(file), file))
 
@@ -48,14 +48,13 @@ if __name__ == '__main__':
 
                 dc = ast.literal_eval(get_result_file(res['result']['oid']).decode('utf-8'))
                 #print(dc)
-                #dc['segments'] = [str(datetime.timedelta(seconds = n)) for n in dc['segments']]
+                dc['segments'] = [str(datetime.timedelta(seconds = n)) for n in dc['segments']]
                 
-                #print('Task completed: ' + str(dc))
-                #results.append({'Video Name': video, 'Segmentation': dc})
+                print('Task completed: ' + str(dc))
+                results.append({'Video Name': video, 'Segmentation': dc})
                 ids.remove((id, video))
 
-        #print('Working on Lecture video segmentation. Please wait.....')
+        print('Working on Lecture video segmentation. Please wait.....')
         time.sleep(60)
-    #print('All activity done:')
-    #print(results)
-    print(dc)
+    print('All activity done:')
+    print(results)
