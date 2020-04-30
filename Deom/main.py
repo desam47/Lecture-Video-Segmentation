@@ -3,6 +3,8 @@ import glob
 import requests
 import json
 from DAO.postgresql import Postgresql
+from colorama import Fore
+from colorama import Style
 import time
 from DAO.mongodb import MongoDB
 import ast
@@ -10,6 +12,8 @@ import argparse
 import datetime
 REST_API_ADDRESS = None
 ENDPOINT = None
+
+
 #ip = None
 
 def send_request(lecture):
@@ -56,7 +60,7 @@ if __name__ == '__main__':
                 #print(dc)
                 dc['segments'] = [str(datetime.timedelta(seconds = n)) for n in dc['segments']]
                 
-                print('Task completed: ' + str(dc))
+                print(f'{Fore.GREEN}Task completed: {Style.RESET_ALL}'  +str(dc))
                 results.append({'Video Name': video, 'Segmentation': dc})
                 ids.remove((id, video))
 
