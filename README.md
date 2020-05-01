@@ -38,5 +38,5 @@ Once the architecture has been initialized and all containers are running, open 
 
 cd Lecture-Video-Segmentation/Demo
 
-python3 segment.py
+python3 main.py
 ```
