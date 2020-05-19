@@ -21,9 +21,78 @@ You can download and install Docker on multiple platforms. Refer to the followin
 
 [Get Docker](https://docs.docker.com/get-docker/)
 
+## Download Kaldi
+
+```sh
+
+sudo mkdir /media/kaldi_models
+
+cd /media/kaldi_models
+
+wget https://phon.ioc.ee/~tanela/tedlium_nnet_ms_sp_online.tgz
+
+tar -zxvf tedlium_nnet_ms_sp_online.tgz
+
+```
+
+## Download word2vec
+
+```sh
+
+sudo mkdir /media/word2vec
+
+cd /media/word2vec
+
+wget --save-cookies cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=0B7XkCwpI5KDYNlNUTTlSS21pQmM' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/Code: \1\n/p'
+
+```
+This will generate a Code as an output. So, you have to type the following command:
+
+```sh
+
+wget --load-cookies cookies.txt 'https://docs.google.com/uc?export=download&confirm=YOURCODEID&id=0B7XkCwpI5KDYNlNUTTlSS21pQmM' -O GoogleNews-vectors-negative300.bin.gz
+
+```
+Note: Replace YOURCODEID with your code
+
+Then extract word2vec model,
+
+```sh
+
+gunzip GoogleNews-vectors-negative300.bin.gz
+
+```
+## Run dockerized version
+
+ Finally create the docker containers. It will take some time.
+ 
+```sh
+
+cd Lecture-Video-Segmentation
+
+```
+
+```sh
+
+docker-compose up
+
+```
+
+## Install python3 libraries from requirements file
+
+```sh
+
+cd Lecture-Video-Segmentation
+
+```
+
+```sh
+
+pip3 install -r requeriments.txt
+
+```
+
 # How to run this architecture
-
-
 
 ```sh
 
