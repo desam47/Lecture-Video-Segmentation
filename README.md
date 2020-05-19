@@ -13,6 +13,13 @@ This "Lecture Video Segmentation" architecture consists of a number of modules, 
 * PostgreSQL: Database used to store metadata from processing.
 * MongoDB: Database used to store the binary files from processing.
 
+# Requirements
+
+## Install Docker
+
+You can download and install Docker on multiple platforms. Refer to the following link and choose the best installation path for you.
+
+[Get Docker](https://docs.docker.com/get-docker/)
 
 # How to run this architecture
 
@@ -27,7 +34,7 @@ cd Lecture-Video-Segmentation
 
 ```sh
 
-sudo docker-compose up
+docker-compose up
 
 ```
 
