@@ -109,7 +109,7 @@ docker-compose up
 
 ```
 
-Once the architecture has been initialized and all containers are running, open a new Terminal tab and enter the "Demo" folder.
+Once the architecture has been initialized and all containers are running, run the main file.
  
 
 ```sh
