@@ -62,7 +62,7 @@ Then extract word2vec model,
 gunzip GoogleNews-vectors-negative300.bin.gz
 
 ```
-## Run dockerized version
+## Create Docker Container
 
  Finally create the docker containers. It will take some time.
  
@@ -93,6 +93,8 @@ pip3 install -r requeriments.txt
 ```
 
 # How to run this architecture
+
+## Run Docker Container
 
 ```sh
 
