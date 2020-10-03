@@ -1,4 +1,3 @@
-
 from nltk import tokenize, pos_tag
 import matplotlib.pyplot as plt
 import numpy as np
